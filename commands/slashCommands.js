@@ -1,6 +1,3 @@
-import uniblockCommand from './uniblockCommand.js';
-import getWallet from './wallet/getWallet.js';
-import setWallet from './wallet/setWallet.js';
 import {
   InteractionType,
   InteractionResponseType,
@@ -9,6 +6,8 @@ import {
   ButtonStyleTypes
 } from 'discord-interactions';
 import { getBalance, pingUniblock } from './uniblockCommands.js';
+import getWallet from './wallet/getWallet.js';
+import setWallet from './wallet/setWallet.js';
 
 const slashCommands = async (req, res, id, data) => {
   const { name } = data;

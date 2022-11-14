@@ -8,8 +8,7 @@ import {
   MessageComponentTypes,
   ButtonStyleTypes
 } from 'discord-interactions';
-
-const activeGames = {};
+import { getBalance, pingUniblock } from './uniblockCommands.js';
 
 const slashCommands = async (req, res, id, data) => {
   const { name } = data;
@@ -27,7 +26,11 @@ const slashCommands = async (req, res, id, data) => {
   }
 
   if (name === 'ping_uniblock') {
-    uniblockCommand(res, id, data);
+    pingUniblock(res, id, data);
+  }
+
+  if (name === 'get_balance') {
+    getBalance(res, id, data);
   }
 
   if (name === 'get_address') {

@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const uniblockCommand = async () => {
+import { InteractionResponseType } from 'discord-interactions';
+const uniblockCommand = async (res) => {
   // Make a request for a user with a given ID
   const axiosRes = await axios.get(
     process.env.UNIBLOCK_BASE_URL + '/portfolio/v1/ping'
@@ -14,6 +14,6 @@ const uniblockCommand = async () => {
       content: axiosRes.data.ping
     }
   });
-}
+};
 
 export default uniblockCommand;

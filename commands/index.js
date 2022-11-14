@@ -1,8 +1,14 @@
-import uniblockCommand from "./uniblockCommand.js";
-import slashCommands from "./slashCommands.js";
-import interactiveCommands from "./interactiveCommands.js";
+import slashCommands from './slashCommands.js';
+import interactiveCommands from './interactiveCommands.js';
+import {
+  InteractionType,
+  InteractionResponseType,
+  InteractionResponseFlags,
+  MessageComponentTypes,
+  ButtonStyleTypes
+} from 'discord-interactions';
 
-export async function HandleCommands(type, id, data) {
+export const HandleCommands = async (res, type, id, data) => {
   /**
    * Handle verification requests
    */
@@ -10,17 +16,12 @@ export async function HandleCommands(type, id, data) {
     return res.send({ type: InteractionResponseType.PONG });
   }
 
-  if (type === 'ping_uniblock') {
-    uniblockCommand(id, data);
-  }
-
-
   /**
    * Handle slash command requests
    * See https://discord.com/developers/docs/interactions/application-commands#slash-commands
    */
   if (type === InteractionType.APPLICATION_COMMAND) {
-    slashCommands(id, data);
+    slashCommands(res, id, data);
   }
 
   /**
@@ -30,4 +31,4 @@ export async function HandleCommands(type, id, data) {
   if (type === InteractionType.MESSAGE_COMPONENT) {
     interactiveCommands(id, data);
   }
-}
+};

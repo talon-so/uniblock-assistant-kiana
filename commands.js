@@ -80,6 +80,12 @@ export const GET_BALANCE = {
   type: 1
 };
 
+export const GASPRICE_COMMAND = {
+  name: "gas_price",
+  description: "get gas price of mainnet",
+  type: 1,
+};
+
 // Command containing options
 export const CHALLENGE_COMMAND = {
   name: 'challenge',

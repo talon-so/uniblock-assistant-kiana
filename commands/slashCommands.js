@@ -1,3 +1,5 @@
+import { getGasPrice } from './functions/getGasPrice.js';
+import { InteractionResponseType } from 'discord-interactions';
 import { getBalance, pingUniblock } from './uniblockCommands.js';
 
 const slashCommands = async (res, id, data) => {
@@ -21,6 +23,18 @@ const slashCommands = async (res, id, data) => {
 
   if (name === 'get_balance') {
     getBalance(res, id, data);
+  }
+
+  if (name === 'gas_price'){
+    const price = await getGasPrice('1');
+    console.log(price.data.gasPrice.toString());
+    return res.send({
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    data: {
+      // Fetches a random emoji to send from a helper function
+      content: `Gas price is ${price.data.gasPrice.toString()}`
+    }
+    })
   }
 
   // "challenge" guild command

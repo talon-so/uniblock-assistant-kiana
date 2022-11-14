@@ -18,6 +18,7 @@ import {
   TEST_COMMAND,
   HasGuildCommands,
   PING_UNIBLOCK_COMMAND,
+  GASPRICE_COMMAND,
   GET_BALANCE
 } from './commands.js';
 import { HandleCommands } from './commands/index.js';
@@ -52,6 +53,7 @@ app.listen(PORT, () => {
     TEST_COMMAND,
     CHALLENGE_COMMAND,
     PING_UNIBLOCK_COMMAND,
+    GASPRICE_COMMAND,
     GET_BALANCE
   ]);
 });

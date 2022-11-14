@@ -9,7 +9,7 @@ const instance = axios.create({
 
 export const pingUniblock = async (res) => {
   // Make a request for a user with a given ID
-  const axiosRes = await axios.get(process.env.UNIBLOCK_BASE_URL + '/v1/ping');
+  const axiosRes = await axios.get(process.env.UNIBLOCK_BASE_URL + '/ping');
   // Send a message into the channel where command was triggered from
   return res.send({
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,

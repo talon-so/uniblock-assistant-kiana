@@ -1,5 +1,5 @@
 import uniblockCommand from './uniblockCommand.js';
-const slashCommands = async (res, id, data) => {
+const slashCommands = async (req, res, id, data) => {
   const { name } = data;
 
   // "test" guild command

@@ -1,4 +1,4 @@
-const interactiveCommands = async (id, data) => {
+const interactiveCommands = async (req, res, id, data) => {
   // custom_id set in payload when sending message component
   const componentId = data.custom_id;
 

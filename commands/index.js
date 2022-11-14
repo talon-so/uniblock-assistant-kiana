@@ -8,7 +8,7 @@ import {
   ButtonStyleTypes
 } from 'discord-interactions';
 
-export const HandleCommands = async (res, type, id, data) => {
+export const HandleCommands = async (req, res, type, id, data) => {
   /**
    * Handle verification requests
    */
@@ -21,7 +21,7 @@ export const HandleCommands = async (res, type, id, data) => {
    * See https://discord.com/developers/docs/interactions/application-commands#slash-commands
    */
   if (type === InteractionType.APPLICATION_COMMAND) {
-    slashCommands(res, id, data);
+    slashCommands(req, res, id, data);
   }
 
   /**
@@ -29,6 +29,6 @@ export const HandleCommands = async (res, type, id, data) => {
    * See https://discord.com/developers/docs/interactions/message-components#responding-to-a-component-interaction
    */
   if (type === InteractionType.MESSAGE_COMPONENT) {
-    interactiveCommands(id, data);
+    interactiveCommands(req, res, id, data);
   }
 };

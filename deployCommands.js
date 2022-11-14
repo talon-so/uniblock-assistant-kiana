@@ -1,7 +1,7 @@
-require("dotenv").config();
-const { REST, SlashCommandBuilder, Routes } = require("discord.js");
+require('dotenv').config();
+const { REST, SlashCommandBuilder, Routes } = require('discord.js');
 
-const fs = require("fs");
+const fs = require('fs');
 const { SocketAddress } = require('net');
 
 const commandFiles = fs
@@ -19,7 +19,10 @@ for (const file of commandFiles) {
   switch (command.name) {
     case 'get_balance':
       builder.addStringOption((option) =>
-        option.setName('address').setDescription('A valid ethereum address')
+        option
+          .setName('address')
+          .setDescription('A valid ethereum address')
+          .setRequired(true)
       );
       break;
     default:
@@ -30,9 +33,9 @@ for (const file of commandFiles) {
 
 const commandsJSON = commands.map((command) => command.toJSON());
 
-const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
+const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
 rest
   .put(Routes.applicationCommands(process.env.APP_ID), { body: commandsJSON })
-  .then(() => console.log("Successfully registered application commands."))
+  .then(() => console.log('Successfully registered application commands.'))
   .catch(console.error);

@@ -25,6 +25,12 @@ for (const file of commandFiles) {
           .setRequired(true)
       );
       break;
+    case 'set_wallet':
+      builder.addStringOption(option =>
+        option.setName('address')
+          .setDescription('User wallet address to set to')
+          .setRequired(true)
+      );
     default:
       break;
   }

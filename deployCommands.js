@@ -25,6 +25,13 @@ for (const file of commandFiles) {
           .setRequired(true)
       );
       break;
+    case 'get_transaction':
+      builder.addStringOption((option) =>
+      option
+        .setName('address')
+        .setDescription('A valid ethereum address')
+        .setRequired(true)
+      );
     default:
       break;
   }

@@ -1,5 +1,17 @@
 import uniblockCommand from './uniblockCommand.js';
-const slashCommands = async (res, id, data) => {
+import getWallet from './wallet/getWallet.js';
+import setWallet from './wallet/setWallet.js';
+import {
+  InteractionType,
+  InteractionResponseType,
+  InteractionResponseFlags,
+  MessageComponentTypes,
+  ButtonStyleTypes
+} from 'discord-interactions';
+
+const activeGames = {};
+
+const slashCommands = async (req, res, id, data) => {
   const { name } = data;
 
   // "test" guild command
@@ -16,6 +28,14 @@ const slashCommands = async (res, id, data) => {
 
   if (name === 'ping_uniblock') {
     uniblockCommand(res, id, data);
+  }
+
+  if (name === 'get_address') {
+    getWallet(req, res, id, data);
+  }
+
+  if (name === 'set_address') {
+    setWallet(req, res, id, data);
   }
 
   // "challenge" guild command

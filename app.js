@@ -40,7 +40,7 @@ app.post('/interactions', async (req, res) => {
   // Interaction type and data
   const { type, id, data } = req.body;
 
-  HandleCommands(res, type, id, data);
+  HandleCommands(req, res, type, id, data);
 });
 
 app.listen(PORT, () => {

@@ -1,4 +1,4 @@
-export default async function (id, data) {
+const slashCommands = async (id, data) => {
   const { name } = data;
 
     // "test" guild command
@@ -47,3 +47,5 @@ export default async function (id, data) {
       });
     }
 }
+
+export default slashCommands;

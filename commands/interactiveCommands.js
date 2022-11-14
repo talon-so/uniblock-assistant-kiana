@@ -1,4 +1,4 @@
-export default async function (id, data) {
+const interactiveCommands = async (id, data) => {
   // custom_id set in payload when sending message component
   const componentId = data.custom_id;
 
@@ -74,3 +74,5 @@ export default async function (id, data) {
     }
   }
 }
+
+export default interactiveCommands;

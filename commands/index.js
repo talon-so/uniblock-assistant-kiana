@@ -1,3 +1,4 @@
+import uniblockCommand from "./uniblockCommand.js";
 import slashCommands from "./slashCommands.js";
 import interactiveCommands from "./interactiveCommands.js";
 
@@ -8,6 +9,11 @@ export async function HandleCommands(type, id, data) {
   if (type === InteractionType.PING) {
     return res.send({ type: InteractionResponseType.PONG });
   }
+
+  if (type === 'ping_uniblock') {
+    uniblockCommand(id, data);
+  }
+
 
   /**
    * Handle slash command requests

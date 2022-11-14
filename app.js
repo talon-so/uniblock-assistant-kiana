@@ -5,15 +5,22 @@ import {
   InteractionResponseType,
   InteractionResponseFlags,
   MessageComponentTypes,
-  ButtonStyleTypes,
+  ButtonStyleTypes
 } from 'discord-interactions';
-import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils.js';
+import {
+  VerifyDiscordRequest,
+  getRandomEmoji,
+  DiscordRequest
+} from './utils.js';
 import { getShuffledOptions, getResult } from './game.js';
 import {
   CHALLENGE_COMMAND,
   TEST_COMMAND,
   HasGuildCommands,
+  PING_UNIBLOCK_COMMAND
 } from './commands.js';
+
+import axios from 'axios';
 
 // Create an express app
 const app = express();
@@ -28,7 +35,7 @@ const activeGames = {};
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
  */
-app.post('/interactions', async function (req, res) {
+app.post('/interactions', async (req, res) => {
   // Interaction type and data
   const { type, id, data } = req.body;
 
@@ -53,10 +60,28 @@ app.post('/interactions', async function (req, res) {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           // Fetches a random emoji to send from a helper function
-          content: 'hello world ' + getRandomEmoji(),
-        },
+          content: 'hello world ' + getRandomEmoji()
+        }
       });
     }
+
+    // "ping uniblock" guild command
+    if (name === 'ping_uniblock') {
+      // Make a request for a user with a given ID
+      const axiosRes = await axios.get(
+        process.env.UNIBLOCK_BASE_URL + '/portfolio/v1/ping'
+      );
+      console.log(axiosRes.data.ping);
+      // Send a message into the channel where command was triggered from
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          // Fetches a random emoji to send from a helper function
+          content: axiosRes.data.ping
+        }
+      });
+    }
+
     // "challenge" guild command
     if (name === 'challenge' && id) {
       const userId = req.body.member.user.id;
@@ -66,7 +91,7 @@ app.post('/interactions', async function (req, res) {
       // Create active game using message ID as the game ID
       activeGames[id] = {
         id: userId,
-        objectName,
+        objectName
       };
 
       return res.send({
@@ -83,12 +108,12 @@ app.post('/interactions', async function (req, res) {
                   // Append the game ID to use later on
                   custom_id: `accept_button_${req.body.id}`,
                   label: 'Accept',
-                  style: ButtonStyleTypes.PRIMARY,
-                },
-              ],
-            },
-          ],
-        },
+                  style: ButtonStyleTypes.PRIMARY
+                }
+              ]
+            }
+          ]
+        }
       });
     }
   }
@@ -122,12 +147,12 @@ app.post('/interactions', async function (req, res) {
                     type: MessageComponentTypes.STRING_SELECT,
                     // Append game ID
                     custom_id: `select_choice_${gameId}`,
-                    options: getShuffledOptions(),
-                  },
-                ],
-              },
-            ],
-          },
+                    options: getShuffledOptions()
+                  }
+                ]
+              }
+            ]
+          }
         });
         // Delete previous message
         await DiscordRequest(endpoint, { method: 'DELETE' });
@@ -145,7 +170,7 @@ app.post('/interactions', async function (req, res) {
         // Calculate result from helper function
         const resultStr = getResult(activeGames[gameId], {
           id: userId,
-          objectName,
+          objectName
         });
 
         // Remove game from storage
@@ -157,15 +182,15 @@ app.post('/interactions', async function (req, res) {
           // Send results
           await res.send({
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-            data: { content: resultStr },
+            data: { content: resultStr }
           });
           // Update ephemeral message
           await DiscordRequest(endpoint, {
             method: 'PATCH',
             body: {
               content: 'Nice choice ' + getRandomEmoji(),
-              components: [],
-            },
+              components: []
+            }
           });
         } catch (err) {
           console.error('Error sending message:', err);
@@ -182,5 +207,6 @@ app.listen(PORT, () => {
   HasGuildCommands(process.env.APP_ID, process.env.GUILD_ID, [
     TEST_COMMAND,
     CHALLENGE_COMMAND,
+    PING_UNIBLOCK_COMMAND
   ]);
 });

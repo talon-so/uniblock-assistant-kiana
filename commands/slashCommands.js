@@ -1,4 +1,5 @@
-import uniblockCommand from './uniblockCommand.js';
+import { getBalance, pingUniblock } from './uniblockCommands.js';
+
 const slashCommands = async (res, id, data) => {
   const { name } = data;
 
@@ -15,7 +16,11 @@ const slashCommands = async (res, id, data) => {
   }
 
   if (name === 'ping_uniblock') {
-    uniblockCommand(res, id, data);
+    pingUniblock(res, id, data);
+  }
+
+  if (name === 'get_balance') {
+    getBalance(res, id, data);
   }
 
   // "challenge" guild command

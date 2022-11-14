@@ -68,9 +68,16 @@ export const TEST_COMMAND = {
 
 // Simple test command
 export const PING_UNIBLOCK_COMMAND = {
-  name: "ping_uniblock",
-  description: "Basic guild command",
-  type: 1,
+  name: 'ping_uniblock',
+  description: 'Pings the Uniblock API',
+  type: 1
+};
+
+// Simple test command
+export const GET_BALANCE = {
+  name: 'get_balance',
+  description: 'Basic guild command',
+  type: 1
 };
 
 export const GASPRICE_COMMAND = {

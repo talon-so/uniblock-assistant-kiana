@@ -18,9 +18,10 @@ import {
   TEST_COMMAND,
   HasGuildCommands,
   PING_UNIBLOCK_COMMAND,
-  GASPRICE_COMMAND
+  GASPRICE_COMMAND,
+  GET_BALANCE
 } from './commands.js';
-import { HandleCommands } from "./commands/index.js";
+import { HandleCommands } from './commands/index.js';
 
 import axios from 'axios';
 
@@ -52,6 +53,7 @@ app.listen(PORT, () => {
     TEST_COMMAND,
     CHALLENGE_COMMAND,
     PING_UNIBLOCK_COMMAND,
-    GASPRICE_COMMAND
+    GASPRICE_COMMAND,
+    GET_BALANCE
   ]);
 });

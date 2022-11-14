@@ -17,7 +17,8 @@ import {
   CHALLENGE_COMMAND,
   TEST_COMMAND,
   HasGuildCommands,
-  PING_UNIBLOCK_COMMAND
+  PING_UNIBLOCK_COMMAND,
+  GASPRICE_COMMAND
 } from './commands.js';
 import { HandleCommands } from "./commands/index.js";
 
@@ -50,6 +51,7 @@ app.listen(PORT, () => {
   HasGuildCommands(process.env.APP_ID, process.env.GUILD_ID, [
     TEST_COMMAND,
     CHALLENGE_COMMAND,
-    PING_UNIBLOCK_COMMAND
+    PING_UNIBLOCK_COMMAND,
+    GASPRICE_COMMAND
   ]);
 });

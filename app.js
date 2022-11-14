@@ -5,16 +5,23 @@ import {
   InteractionResponseType,
   InteractionResponseFlags,
   MessageComponentTypes,
-  ButtonStyleTypes,
+  ButtonStyleTypes
 } from 'discord-interactions';
-import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils.js';
+import {
+  VerifyDiscordRequest,
+  getRandomEmoji,
+  DiscordRequest
+} from './utils.js';
 import { getShuffledOptions, getResult } from './game.js';
 import {
   CHALLENGE_COMMAND,
   TEST_COMMAND,
   HasGuildCommands,
+  PING_UNIBLOCK_COMMAND
 } from './commands.js';
 import { HandleCommands } from "./commands/index.js";
+
+import axios from 'axios';
 
 // Create an express app
 const app = express();
@@ -29,7 +36,7 @@ const activeGames = {};
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
  */
-app.post('/interactions', async function (req, res) {
+app.post('/interactions', async (req, res) => {
   // Interaction type and data
   const { type, id, data } = req.body;
 
@@ -43,5 +50,6 @@ app.listen(PORT, () => {
   HasGuildCommands(process.env.APP_ID, process.env.GUILD_ID, [
     TEST_COMMAND,
     CHALLENGE_COMMAND,
+    PING_UNIBLOCK_COMMAND
   ]);
 });

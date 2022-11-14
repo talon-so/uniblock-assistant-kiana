@@ -21,7 +21,7 @@ for (const file of commandFiles) {
 const commandsJSON = commands.map((command) => command.toJSON());
 
 const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
-console.log(commandsJSON);
+
 rest
   .put(Routes.applicationCommands(process.env.APP_ID), { body: commandsJSON })
   .then(() => console.log("Successfully registered application commands."))

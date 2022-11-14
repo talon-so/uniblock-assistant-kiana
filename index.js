@@ -12,6 +12,9 @@ client.cooldowns = new Discord.Collection();
 const commandFiles = fs
   .readdirSync("./commands")
   .filter((file) => file.endsWith(".js"));
+const argCommandFiles = fs
+  .readdirSync("./arg_commands")
+  .filter((file) => file.endsWith(".js"));
 const eventFiles = fs
   .readdirSync("./events")
   .filter((file) => file.endsWith(".js"));
@@ -30,4 +33,11 @@ for (const file of eventFiles) {
   }
 }
 
+for (const file of argCommandFiles) {
+  const command = require(`./arg_commands/${file}`);
+  client.commands.set(command.name, command);
+}
+
 client.login(process.env.DISCORD_TOKEN);
+
+module.exports.wallets = {};

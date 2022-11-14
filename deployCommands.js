@@ -7,6 +7,10 @@ const commandFiles = fs
   .readdirSync("./commands")
   .filter((file) => file.endsWith(".js"));
 
+const argCommandFiles = fs
+  .readdirSync("./arg_commands")
+  .filter((file) => file.endsWith(".js"));
+
 const commands = [];
 
 for (const file of commandFiles) {
@@ -17,6 +21,20 @@ for (const file of commandFiles) {
       .setDescription(command.description)
   );
 }
+
+for (const file of argCommandFiles) {
+  const command = require(`./arg_commands/${file}`);
+  commands.push(
+    new SlashCommandBuilder()
+      .setName(command.name)
+      .setDescription(command.description)
+      .addStringOption(option =>
+        option.setName('address')
+          .setDescription('User wallet address to set to'))
+  )
+}
+
+
 
 const commandsJSON = commands.map((command) => command.toJSON());
 

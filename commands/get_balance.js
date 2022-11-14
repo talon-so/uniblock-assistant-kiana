@@ -1,5 +1,5 @@
 const axios = require('axios');
-const wrapCodeBlock = require('../utils/wrapCodeBlock.js');
+const { wrapCodeBlock } = require('../utils/wrapCodeBlock.js');
 
 module.exports = {
   name: 'get_balance',

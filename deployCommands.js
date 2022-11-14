@@ -32,6 +32,14 @@ for (const file of commandFiles) {
         .setDescription('A valid ethereum address')
         .setRequired(true)
       );
+      break;
+    case 'set_wallet':
+      builder.addStringOption(option =>
+        option.setName('address')
+          .setDescription('User wallet address to set to')
+          .setRequired(true)
+      );
+      break;
     default:
       break;
   }

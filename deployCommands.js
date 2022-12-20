@@ -10,7 +10,6 @@ const commands = [];
 
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
-  console.log(command);
   let builder = new SlashCommandBuilder()
     .setName(command.name)
     .setDescription(command.description);
@@ -20,16 +19,87 @@ for (const file of commandFiles) {
         .addStringOption((option) =>
           option
             .setName('address')
-            .setDescription('A valid ethereum address')
+            .setDescription('The address that the balance records are tied to.')
             .setRequired(false)
         )
         .addIntegerOption((option) =>
           option
             .setName('chain_id')
-            .setDescription('A valid chainId for a network')
+            .setDescription('Network to filter through balance records.')
+            .setRequired(false)
             .setMinValue(0)
+        )
+        .addStringOption((option) =>
+          option
+            .setName('token_address')
+            .setDescription(
+              'The address of a specific token to filter through the balance records.'
+            )
+        )
+        .addIntegerOption((option) =>
+          option
+            .setName('limit')
+            .setDescription('The maximum number of balance records to return.')
+            .setMinValue(0)
+        )
+        .addIntegerOption((option) =>
+          option
+            .setName('offset')
+            .setDescription('Number of records to skip in the query.')
+            .setMinValue(0)
+        )
+        .addStringOption((option) =>
+          option
+            .setName('cursor')
+            .setDescription('The cursor returned in the previous response.')
         );
-
+      break;
+    case 'get_balance_historical':
+      builder
+        .addStringOption((option) =>
+          option
+            .setName('address')
+            .setDescription('The address that the balance records are tied to.')
+            .setRequired(false)
+        )
+        .addIntegerOption((option) =>
+          option
+            .setName('chain_id')
+            .setDescription('Network to filter through balance records.')
+            .setRequired(false)
+            .setMinValue(0)
+        )
+        .addIntegerOption((option) =>
+        option
+          .setName('timestamp')
+          .setDescription('Numerical representation of the earliest date the balance records were indexed.')
+          .setRequired(false)
+          .setMinValue(0)
+      )
+        .addStringOption((option) =>
+          option
+            .setName('token_address')
+            .setDescription(
+              'The address of a specific token to filter through the balance records.'
+            )
+        )
+        .addIntegerOption((option) =>
+          option
+            .setName('limit')
+            .setDescription('The maximum number of balance records to return.')
+            .setMinValue(0)
+        )
+        .addIntegerOption((option) =>
+          option
+            .setName('offset')
+            .setDescription('Number of records to skip in the query.')
+            .setMinValue(0)
+        )
+        .addStringOption((option) =>
+          option
+            .setName('cursor')
+            .setDescription('The cursor returned in the previous response.')
+        );
       break;
     case 'get_transaction':
       builder.addStringOption((option) =>
@@ -50,6 +120,7 @@ for (const file of commandFiles) {
     default:
       break;
   }
+  console.log(command);
   commands.push(builder);
 }
 

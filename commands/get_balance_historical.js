@@ -18,14 +18,14 @@ module.exports = {
       imports.wallets[interaction.user.id];
     // throw error if no address given and no user wallet set
     if (!address) {
-      interaction.editReply('No address given to get_balance');
+      interaction.editReply('No address given to get_balance_historical');
       return;
     }
-    const chainId = interaction.options.getInteger('chainId') || 1;
-    const timestamp = interaction.options.getInteger('timeStamp') || 0;
+    const chainId = interaction.options.getInteger('chain_id') || 1;
+    const timestamp = interaction.options.getInteger('timestamp') || 0;
 
     // ------ optional params ----------
-    const tokenAddress = interaction.options.getString('tokenAddress');
+    const tokenAddress = interaction.options.getString('token_address');
     const limit = interaction.options.getInteger('limit');
     const offset = interaction.options.getInteger('offset');
     const cursor = interaction.options.getString('cursor');

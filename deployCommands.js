@@ -70,12 +70,14 @@ for (const file of commandFiles) {
             .setMinValue(0)
         )
         .addIntegerOption((option) =>
-        option
-          .setName('timestamp')
-          .setDescription('Numerical representation of the earliest date the balance records were indexed.')
-          .setRequired(false)
-          .setMinValue(0)
-      )
+          option
+            .setName('timestamp')
+            .setDescription(
+              'Numerical representation of the earliest date the balance records were indexed.'
+            )
+            .setRequired(false)
+            .setMinValue(0)
+        )
         .addStringOption((option) =>
           option
             .setName('token_address')
@@ -99,6 +101,29 @@ for (const file of commandFiles) {
           option
             .setName('cursor')
             .setDescription('The cursor returned in the previous response.')
+        );
+      break;
+    case 'get_nft':
+      builder
+        .addStringOption((option) =>
+          option
+            .setName('address')
+            .setDescription('Enter the address of the NFT contract')
+            .setRequired(false)
+        )
+        .addIntegerOption((option) =>
+          option
+            .setName('token_id')
+            .setDescription('Enter the NFT ID of the specific NFT to query')
+            .setRequired(false)
+            .setMinValue(0)
+        )
+        .addIntegerOption((option) =>
+          option
+            .setName('chain_id')
+            .setDescription('Network to filter through balance records.')
+            .setRequired(false)
+            .setMinValue(0)
         );
       break;
     case 'get_transaction':

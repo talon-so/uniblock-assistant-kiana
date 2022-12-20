@@ -19,10 +19,10 @@ module.exports = {
       interaction.editReply('No address given to get_balance');
       return;
     }
-    const chainId = interaction.options.getInteger('chainId') || 1;
+    const chainId = interaction.options.getInteger('chain_id') || 1;
 
     // ------ optional params ----------
-    const tokenAddress = interaction.options.getString('tokenAddress');
+    const tokenAddress = interaction.options.getString('token_address');
     const limit = interaction.options.getInteger('limit');
     const offset = interaction.options.getInteger('offset');
     const cursor = interaction.options.getString('cursor');

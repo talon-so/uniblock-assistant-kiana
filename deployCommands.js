@@ -4,14 +4,27 @@ const fs = require('fs');
 
 const commandFiles = fs
   .readdirSync('./commands')
-  .filter((file) => file.endsWith('.js'));
+  .filter((file) => file.endsWith('.js') || file.isDirectory());
 
 const commands = [];
 
 for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
-  console.log(command);
-  commands.push(command.builder);
+  if (file.isDirectory()) {
+    {
+      const subCommandFiles = fs
+        .readdirSync(`./commands/${file}`)
+        .filter((file) => file.endsWith('.js'));
+      for (const subfile of subCommandFiles) {
+        const command = require(`./commands/${file}/${subfile}`);
+        console.log(command);
+        commands.push(command.builder);
+      }
+    }
+  } else {
+    const command = require(`./commands/${file}`);
+    console.log(command);
+    commands.push(command.builder);
+  }
 }
 
 const commandsJSON = commands.map((command) => command.toJSON());

@@ -8,6 +8,8 @@ const name = "get_balance_historical";
 const description = "Gets the user's historical portfolio value, and user's historical balance records."
 
 module.exports = {
+  name,
+  description,
   cooldown: 1000,
   builder: new SlashCommandBuilder()
     .setName(name)

@@ -1,12 +1,20 @@
 const axios = require('axios');
-const { AttachmentBuilder } = require('discord.js');
-const { Message } = require('discord.js');
-const fs = require('fs');
+const { AttachmentBuilder, SlashCommandBuilder } = require('discord.js');
+
+const name = "get_transaction";
+const description = "Get Transaction Fees";
 
 module.exports = {
-  name: 'get_transaction',
-  description: 'Get Transaction Fees',
+  name,
+  description,
   cooldown: 1000,
+  builder: new SlashCommandBuilder().setName(name).setDescription(description)
+    .addStringOption((option) =>
+      option
+      .setName('address')
+      .setDescription('A valid ethereum address')
+      .setRequired(true)
+    ),
   async run(interaction, client) {
     const address = interaction.options.getString('address');
     // Make a request for a user with a given ID

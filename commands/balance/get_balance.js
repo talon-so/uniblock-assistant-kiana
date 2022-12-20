@@ -1,12 +1,54 @@
 const axios = require('axios');
-const { AttachmentBuilder } = require('discord.js');
+const { AttachmentBuilder, SlashCommandBuilder } = require('discord.js');
 const imports = require('../index.js');
 
+const name = "get_balance";
+const description = "Gets the user's current portfolio value, and user's current balance records.";
+
 module.exports = {
-  name: 'get_balance',
-  description:
-    "Gets the user's current portfolio value, and user's current balance records.",
+  name,
+  description,
   cooldown: 1000,
+  builder: new SlashCommandBuilder()
+    .setName(name)
+    .setDescription(description)
+    .addStringOption((option) =>
+      option
+        .setName('address')
+        .setDescription('The address that the balance records are tied to.')
+        .setRequired(false)
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName('chain_id')
+        .setDescription('Network to filter through balance records.')
+        .setRequired(false)
+        .setMinValue(0)
+    )
+    .addStringOption((option) =>
+      option
+        .setName('token_address')
+        .setDescription(
+          'The address of a specific token to filter through the balance records.'
+        )
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName('limit')
+        .setDescription('The maximum number of balance records to return.')
+        .setMinValue(0)
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName('offset')
+        .setDescription('Number of records to skip in the query.')
+        .setMinValue(0)
+    )
+    .addStringOption((option) =>
+      option
+        .setName('cursor')
+        .setDescription('The cursor returned in the previous response.')
+    ),
   async run(interaction) {
     await interaction.deferReply();
     // ------ required params ----------
@@ -42,7 +84,7 @@ module.exports = {
       interaction.editReply(
         e.response.data.statusCode + ': ' + e.response.data.message
       );
-    }); 
+    });
 
     if (res) {
       // Send a message into the channel where command was triggered from

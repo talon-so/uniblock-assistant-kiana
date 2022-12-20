@@ -1,14 +1,61 @@
 const axios = require('axios');
 const { timeEnd } = require('console');
-const { AttachmentBuilder } = require('discord.js');
+const { AttachmentBuilder, SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
 const imports = require('../index.js');
 
+const name = "get_balance_historical";
+const description = "Gets the user's historical portfolio value, and user's historical balance records."
+
 module.exports = {
-  name: 'get_balance_historical',
-  description:
-    "Gets the user's historical portfolio value, and user's historical balance records.",
   cooldown: 1000,
+  builder: new SlashCommandBuilder()
+    .setName(name)
+    .setDescription(description)
+    .addStringOption((option) =>
+      option
+        .setName('address')
+        .setDescription('The address that the balance records are tied to.')
+        .setRequired(false)
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName('chain_id')
+        .setDescription('Network to filter through balance records.')
+        .setRequired(false)
+        .setMinValue(0)
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName('timestamp')
+        .setDescription('Numerical representation of the earliest date the balance records were indexed.')
+        .setRequired(false)
+        .setMinValue(0)
+    )
+    .addStringOption((option) =>
+      option
+        .setName('token_address')
+        .setDescription(
+          'The address of a specific token to filter through the balance records.'
+        )
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName('limit')
+        .setDescription('The maximum number of balance records to return.')
+        .setMinValue(0)
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName('offset')
+        .setDescription('Number of records to skip in the query.')
+        .setMinValue(0)
+    )
+    .addStringOption((option) =>
+      option
+        .setName('cursor')
+        .setDescription('The cursor returned in the previous response.')
+    ),
   async run(interaction) {
     await interaction.deferReply();
     // ------ required params ----------

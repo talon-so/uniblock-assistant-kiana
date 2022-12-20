@@ -1,10 +1,21 @@
-const imports = require('../index.js');
+const imports = require('../../index.js');
 const { ethers } = require("ethers");
+const { SlashCommandBuilder } = require('discord.js');
+
+const name = "set_wallet";
+const description = "Set the users wallet";
 
 module.exports = {
-  name: "set_wallet",
-  description: "Set the users wallet",
+  name,
+  description,
   cooldown: 1000,
+  builder: new SlashCommandBuilder().setName(name).setDescription(description)
+    .addStringOption((option) =>
+      option
+      .setName('address')
+      .setDescription('User wallet address to set to')
+      .setRequired(true)
+    ),
   async run(interaction, client) {
     const wallets = imports.wallets;
     const userId = interaction.user.id;

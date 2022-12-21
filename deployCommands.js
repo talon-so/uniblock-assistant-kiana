@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { REST, SlashCommandBuilder, Routes } = require('discord.js');
+const { NETWORK_OPTIONS } = require('./constants/network.js');
 const fs = require('fs');
 
 const commandFiles = fs
@@ -27,7 +28,6 @@ for (const file of commandFiles) {
             .setName('chain_id')
             .setDescription('Network to filter through balance records.')
             .setRequired(false)
-            .setMinValue(0)
         )
         .addStringOption((option) =>
           option
@@ -53,6 +53,10 @@ for (const file of commandFiles) {
             .setName('cursor')
             .setDescription('The cursor returned in the previous response.')
         );
+      // TODO: fix choices when discord.js bug fixed and addChoices accepts arrays.
+      NETWORK_OPTIONS.forEach((choice) => {
+        builder.options[1].addChoices(choice);
+      });
       break;
     case 'get_balance_historical':
       builder
@@ -102,6 +106,10 @@ for (const file of commandFiles) {
             .setName('cursor')
             .setDescription('The cursor returned in the previous response.')
         );
+      // TODO: fix choices when discord.js bug fixed and addChoices accepts arrays.
+      NETWORK_OPTIONS.forEach((choice) => {
+        builder.options[1].addChoices(choice);
+      });
       break;
     case 'get_nft':
       builder
@@ -109,13 +117,13 @@ for (const file of commandFiles) {
           option
             .setName('address')
             .setDescription('Enter the address of the NFT contract')
-            .setRequired(false)
+            .setRequired(true)
         )
         .addIntegerOption((option) =>
           option
             .setName('token_id')
             .setDescription('Enter the NFT ID of the specific NFT to query')
-            .setRequired(false)
+            .setRequired(true)
             .setMinValue(0)
         )
         .addIntegerOption((option) =>
@@ -125,6 +133,10 @@ for (const file of commandFiles) {
             .setRequired(false)
             .setMinValue(0)
         );
+      // TODO: fix choices when discord.js bug fixed and addChoices accepts arrays.
+      NETWORK_OPTIONS.forEach((choice) => {
+        builder.options[2].addChoices(choice);
+      });
       break;
     case 'get_transaction':
       builder.addStringOption((option) =>

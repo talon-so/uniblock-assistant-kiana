@@ -22,7 +22,7 @@ module.exports = {
       }
       const chainId = interaction.options.getInteger('chain_id') || 1;
       const tokenId = interaction.options.getInteger('token_id');
-      if (!address) {
+      if (!tokenId) {
         interaction.editReply('No token ID given to get NFT');
         return;
       }
@@ -35,7 +35,6 @@ module.exports = {
         console.log(
           '-------------------------------------- ERROR ----------------------------------------'
         );
-        console.log(e);
         interaction.editReply(
           e.response.data.statusCode + ': ' + e.response.data.message
         );
@@ -45,10 +44,8 @@ module.exports = {
         // try and get metadata
         const metadata = await axios.get(res.data.tokenURI);
         if (metadata) {
-          console.log(metadata.data);
           const embed = new EmbedBuilder()
             .setColor(0x0099ff)
-
             .setURL(res?.data?.tokenURI)
             .setTimestamp()
             .setFooter({

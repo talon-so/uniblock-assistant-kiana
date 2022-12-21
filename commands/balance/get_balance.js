@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { AttachmentBuilder, SlashCommandBuilder } = require('discord.js');
-const imports = require('../index.js');
+const imports = require('../../index.js');
 
 const name = "get_balance";
 const description = "Gets the user's current portfolio value, and user's current balance records.";

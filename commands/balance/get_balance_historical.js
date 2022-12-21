@@ -2,7 +2,7 @@ const axios = require('axios');
 const { timeEnd } = require('console');
 const { AttachmentBuilder, SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
-const imports = require('../index.js');
+const imports = require('../../index.js');
 
 const name = "get_balance_historical";
 const description = "Gets the user's historical portfolio value, and user's historical balance records."

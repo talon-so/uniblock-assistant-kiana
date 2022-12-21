@@ -20,5 +20,4 @@ module.exports = {
 
     interaction.reply({ content: result });
   },
-  builder: 
 };

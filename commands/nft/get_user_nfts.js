@@ -71,33 +71,63 @@ module.exports = {
       let params = { chainId: chainId };
       let queryURL = process.env.UNIBLOCK_BASE_URL + `/nft/${address}`;
 
-      let embed1 = new EmbedBuilder().setImage('https://picsum.photos/150');
-      let embed2 = new EmbedBuilder().setImage('https://picsum.photos/150');
-      let embed3 = new EmbedBuilder().setImage('https://picsum.photos/150');
-
-      let embed4 = new EmbedBuilder()
-        .setURL('oh')
-        .setImage('https://picsum.photos/150');
-
-      await interaction.editReply({
-        embeds: [embed1, embed2, embed3, embed4]
-        //files: [attachment]
+      const res = await axios.get(queryURL, { params: params }).catch((e) => {
+        console.log(
+          '-------------------------------------- AXIOS ERROR ----------------------------------------'
+        );
+        interaction.editReply(
+          e.response.data.statusCode + ': ' + e.response.data.message
+        );
       });
-      if (false) {
-        const res = await axios.get(queryURL, { params: params }).catch((e) => {
-          console.log(
-            '-------------------------------------- AXIOS ERROR ----------------------------------------'
-          );
-          interaction.editReply(
-            e.response.data.statusCode + ': ' + e.response.data.message
-          );
-        });
+      if (res) {
         console.log(res.data);
         // Send a message into the channel where command was triggered from
         const strRes = JSON.stringify(res.data, null, 2);
 
         const attachment = new AttachmentBuilder(Buffer.from(strRes, 'utf-8'), {
           name: 'response.txt'
+        });
+
+        let embed1 = new EmbedBuilder()
+          .setTitle('testy')
+          .setImage('https://picsum.photos/400')
+          .setURL('https://picsum.photos/500');
+        let embed2 = new EmbedBuilder()
+          .setTitle('test2')
+          .setImage('https://picsum.photos/400')
+          .setURL('https://picsum.photos/500');
+        let embed3 = new EmbedBuilder()
+          .setTitle('test3')
+          .setImage('https://picsum.photos/400')
+          .setURL('https://picsum.photos/500');
+        let embed4 = new EmbedBuilder()
+          .setImage('https://picsum.photos/400')
+          .setURL('https://picsum.photos/500');
+        let embed5 = new EmbedBuilder()
+          .setImage('https://picsum.photos/400')
+          .setURL('https://picsum.photos/300');
+        let embed6 = new EmbedBuilder()
+          .setImage('https://picsum.photos/400')
+          .setURL('https://picsum.photos/300');
+        let embed7 = new EmbedBuilder()
+          .setImage('https://picsum.photos/400')
+          .setURL('https://picsum.photos/300');
+        let embed8 = new EmbedBuilder()
+          .setImage('https://picsum.photos/400')
+          .setURL('https://picsum.photos/300');
+
+        await interaction.editReply({
+          embeds: [
+            embed1,
+            embed2,
+            embed3,
+            embed4,
+            embed5,
+            embed6,
+            embed7,
+            embed8
+          ],
+          files: [attachment]
         });
       }
     } catch (e) {

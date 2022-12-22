@@ -8,9 +8,8 @@ const imports = require('../../index.js');
 const { addQueryOptions } = require('../../utils/addQueryOptions');
 const { NETWORK_OPTIONS } = require('../../constants/network.js');
 
-const name = 'get_balance_historical';
-const description =
-  "Gets the user's historical portfolio value, and user's historical balance records.";
+const name = 'get_user_nfts';
+const description = 'Get the NFT balance of a specific user.';
 
 const builder = new SlashCommandBuilder()
   .setName(name)
@@ -46,6 +45,7 @@ NETWORK_OPTIONS.forEach((choice) => {
   builder.options[3].addChoices(choice);
 });
 addQueryOptions(builder);
+
 module.exports = {
   name: name,
   description: description,
@@ -71,38 +71,19 @@ module.exports = {
       let params = { chainId: chainId };
       let queryURL = process.env.UNIBLOCK_BASE_URL + `/nft/${address}`;
 
-      let embed1 = new EmbedBuilder()
-        .setTitle('Some title')
-        .setURL(
-          'https://uc313f52f1dff5e27ce681578805.previews.dropboxusercontent.com/p/thumb/ABxooOQ11HLoy-osr1iienXOulzAebB9uIdUJDXsPjSbsDrucTfgajTYVaEsizoxlU1TFm3Pf58XjDrHlTFqVQ9x-3UR-F0Bni06lj_0v0DT5XJBlj8hxEo4EWepdQryCKDOThOJYbYPrJaruxx78u0n0fL23KRuA57S4I_hvA4Uz39Qf4PqUYwyRtMv2edBaL5sEVdnhrDnQM5m26fFgoBBxtHgvofMjRs1Ao7NRGDGpcHrdWDJ8fPgbaW-eHSfWK1jVaqFRQpITD1WIzAUJRnkfXx0smq4mzvJCnSKQYQ8Hx-reLt5o9HNF9JzTjP75hZ5ONldnXmBa2ALDLAW6sk7NbhCuZZmp0OMadkfG8lbjTNiIOIsS9KaAJd1X8trxe9lO9HBw1ZHBalKPnlp3z971iU5Gwm0Q0chjy54Nomjxw/p.png'
-        )
-        .setImage(
-          'https://uc313f52f1dff5e27ce681578805.previews.dropboxusercontent.com/p/thumb/ABxooOQ11HLoy-osr1iienXOulzAebB9uIdUJDXsPjSbsDrucTfgajTYVaEsizoxlU1TFm3Pf58XjDrHlTFqVQ9x-3UR-F0Bni06lj_0v0DT5XJBlj8hxEo4EWepdQryCKDOThOJYbYPrJaruxx78u0n0fL23KRuA57S4I_hvA4Uz39Qf4PqUYwyRtMv2edBaL5sEVdnhrDnQM5m26fFgoBBxtHgvofMjRs1Ao7NRGDGpcHrdWDJ8fPgbaW-eHSfWK1jVaqFRQpITD1WIzAUJRnkfXx0smq4mzvJCnSKQYQ8Hx-reLt5o9HNF9JzTjP75hZ5ONldnXmBa2ALDLAW6sk7NbhCuZZmp0OMadkfG8lbjTNiIOIsS9KaAJd1X8trxe9lO9HBw1ZHBalKPnlp3z971iU5Gwm0Q0chjy54Nomjxw/p.png'
-        );
-
-      let embed2 = new EmbedBuilder()
-        .setURL(
-          'https://uc313f52f1dff5e27ce681578805.previews.dropboxusercontent.com/p/thumb/ABxooOQ11HLoy-osr1iienXOulzAebB9uIdUJDXsPjSbsDrucTfgajTYVaEsizoxlU1TFm3Pf58XjDrHlTFqVQ9x-3UR-F0Bni06lj_0v0DT5XJBlj8hxEo4EWepdQryCKDOThOJYbYPrJaruxx78u0n0fL23KRuA57S4I_hvA4Uz39Qf4PqUYwyRtMv2edBaL5sEVdnhrDnQM5m26fFgoBBxtHgvofMjRs1Ao7NRGDGpcHrdWDJ8fPgbaW-eHSfWK1jVaqFRQpITD1WIzAUJRnkfXx0smq4mzvJCnSKQYQ8Hx-reLt5o9HNF9JzTjP75hZ5ONldnXmBa2ALDLAW6sk7NbhCuZZmp0OMadkfG8lbjTNiIOIsS9KaAJd1X8trxe9lO9HBw1ZHBalKPnlp3z971iU5Gwm0Q0chjy54Nomjxw/p.png'
-        )
-        .setImage('https://someimagelink.jpg');
-
-      let embed3 = new EmbedBuilder()
-        .setURL(
-          'https://uc313f52f1dff5e27ce681578805.previews.dropboxusercontent.com/p/thumb/ABxooOQ11HLoy-osr1iienXOulzAebB9uIdUJDXsPjSbsDrucTfgajTYVaEsizoxlU1TFm3Pf58XjDrHlTFqVQ9x-3UR-F0Bni06lj_0v0DT5XJBlj8hxEo4EWepdQryCKDOThOJYbYPrJaruxx78u0n0fL23KRuA57S4I_hvA4Uz39Qf4PqUYwyRtMv2edBaL5sEVdnhrDnQM5m26fFgoBBxtHgvofMjRs1Ao7NRGDGpcHrdWDJ8fPgbaW-eHSfWK1jVaqFRQpITD1WIzAUJRnkfXx0smq4mzvJCnSKQYQ8Hx-reLt5o9HNF9JzTjP75hZ5ONldnXmBa2ALDLAW6sk7NbhCuZZmp0OMadkfG8lbjTNiIOIsS9KaAJd1X8trxe9lO9HBw1ZHBalKPnlp3z971iU5Gwm0Q0chjy54Nomjxw/p.png'
-        )
-        .setImage('https://someimagelink.jpg');
+      let embed1 = new EmbedBuilder().setImage('https://picsum.photos/150');
+      let embed2 = new EmbedBuilder().setImage('https://picsum.photos/150');
+      let embed3 = new EmbedBuilder().setImage('https://picsum.photos/150');
 
       let embed4 = new EmbedBuilder()
-        .setURL(
-          'https://uc313f52f1dff5e27ce681578805.previews.dropboxusercontent.com/p/thumb/ABxooOQ11HLoy-osr1iienXOulzAebB9uIdUJDXsPjSbsDrucTfgajTYVaEsizoxlU1TFm3Pf58XjDrHlTFqVQ9x-3UR-F0Bni06lj_0v0DT5XJBlj8hxEo4EWepdQryCKDOThOJYbYPrJaruxx78u0n0fL23KRuA57S4I_hvA4Uz39Qf4PqUYwyRtMv2edBaL5sEVdnhrDnQM5m26fFgoBBxtHgvofMjRs1Ao7NRGDGpcHrdWDJ8fPgbaW-eHSfWK1jVaqFRQpITD1WIzAUJRnkfXx0smq4mzvJCnSKQYQ8Hx-reLt5o9HNF9JzTjP75hZ5ONldnXmBa2ALDLAW6sk7NbhCuZZmp0OMadkfG8lbjTNiIOIsS9KaAJd1X8trxe9lO9HBw1ZHBalKPnlp3z971iU5Gwm0Q0chjy54Nomjxw/p.png'
-        )
-        .setImage('https://someimagelink.jpg');
+        .setURL('oh')
+        .setImage('https://picsum.photos/150');
 
-      await interaction.editReply('test', {
-        embed: [embed1, embed2, embed3]
+      await interaction.editReply({
+        embeds: [embed1, embed2, embed3, embed4]
         //files: [attachment]
       });
-      if (res) {
+      if (false) {
         const res = await axios.get(queryURL, { params: params }).catch((e) => {
           console.log(
             '-------------------------------------- AXIOS ERROR ----------------------------------------'

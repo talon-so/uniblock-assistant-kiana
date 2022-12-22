@@ -1,14 +1,12 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 
 module.exports = {
-  name: "interactionCreate",
+  name: 'interactionCreate',
   once: false,
   run(interaction, client) {
     if (!interaction.isCommand()) return;
-
     const commandName = interaction.commandName;
     const command = client.commands.find((cmd) => cmd.name == commandName);
-
     if (!client.cooldowns.has(command.name)) {
       client.cooldowns.set(command.name, new Discord.Collection());
     }
@@ -22,9 +20,9 @@ module.exports = {
       if (Date.now() < expirationTime) {
         const timeLeft = (expirationTime - Date.now()) / 1000;
         return interaction.reply(
-          "Whoops, you are on cooldown for this command for another " +
+          'Whoops, you are on cooldown for this command for another ' +
             timeLeft +
-            " seconds."
+            ' seconds.'
         );
       }
     }
@@ -32,5 +30,5 @@ module.exports = {
     timestamps.set(interaction.user.id, Date.now());
 
     if (command) return command.run(interaction, client);
-  },
+  }
 };

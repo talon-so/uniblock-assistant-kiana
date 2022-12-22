@@ -24,7 +24,6 @@ for (const file of commandFiles) {
   }
 }
 
-console.log(commands)
 const commandsJSON = commands.map((command) => command.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);

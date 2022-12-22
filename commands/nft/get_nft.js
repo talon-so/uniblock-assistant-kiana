@@ -1,12 +1,44 @@
 const axios = require('axios');
-const { EmbedBuilder } = require('discord.js');
-const imports = require('../index.js');
-const { getNetwork } = require('../constants/network.js');
+const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const imports = require('../../index.js');
+const { getNetwork, NETWORK_OPTIONS } = require('../../constants/network.js');
+
+const name = 'get_nft';
+const description = 'Gets information of a specific NFT.';
+
+const builder = new SlashCommandBuilder()
+  .setName(name)
+  .setDescription(description)
+  .addStringOption((option) =>
+    option
+      .setName('address')
+      .setDescription('Enter the address of the NFT contract')
+      .setRequired(true)
+  )
+  .addIntegerOption((option) =>
+    option
+      .setName('token_id')
+      .setDescription('Enter the NFT ID of the specific NFT to query')
+      .setRequired(true)
+      .setMinValue(0)
+  )
+  .addIntegerOption((option) =>
+    option
+      .setName('chain_id')
+      .setDescription('Network to filter through balance records.')
+      .setRequired(false)
+      .setMinValue(0)
+  );
+// TODO: fix choices when discord.js bug fixed and addChoices accepts arrays.
+NETWORK_OPTIONS.forEach((choice) => {
+  builder.options[2].addChoices(choice);
+});
 
 module.exports = {
-  name: 'get_nft',
-  description: 'Gets information of a specific NFT.',
+  name: name,
+  description: description,
   cooldown: 1000,
+  builder: builder,
   async run(interaction) {
     try {
       await interaction.deferReply();

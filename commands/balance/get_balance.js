@@ -1,54 +1,46 @@
 const axios = require('axios');
 const { AttachmentBuilder, SlashCommandBuilder } = require('discord.js');
-const imports = require('../../index.js');
+const imports = require('../../index.js')
+const { NETWORK_OPTIONS } = require('../../constants/network.js');
+const { addQueryOptions } = require('../../utils/addQueryOptions');
 
-const name = "get_balance";
-const description = "Gets the user's current portfolio value, and user's current balance records.";
+const name = 'get_balance';
+const description =
+  "Gets the user's current portfolio value, and user's current balance records.";
+
+const builder = new SlashCommandBuilder()
+  .setName(name)
+  .setDescription(description)
+  .addStringOption((option) =>
+    option
+      .setName('address')
+      .setDescription('The address that the balance records are tied to.')
+      .setRequired(false)
+  )
+  .addIntegerOption((option) =>
+    option
+      .setName('chain_id')
+      .setDescription('Network to filter through balance records.')
+      .setRequired(false)
+  )
+  .addStringOption((option) =>
+    option
+      .setName('token_address')
+      .setDescription(
+        'The address of a specific token to filter through the balance records.'
+      )
+  );
+addQueryOptions(builder);
+// TODO: fix choices when discord.js bug fixed and addChoices accepts arrays.
+NETWORK_OPTIONS.forEach((choice) => {
+  builder.options[1].addChoices(choice);
+});
 
 module.exports = {
-  name,
-  description,
+  name: name,
+  description: description,
   cooldown: 1000,
-  builder: new SlashCommandBuilder()
-    .setName(name)
-    .setDescription(description)
-    .addStringOption((option) =>
-      option
-        .setName('address')
-        .setDescription('The address that the balance records are tied to.')
-        .setRequired(false)
-    )
-    .addIntegerOption((option) =>
-      option
-        .setName('chain_id')
-        .setDescription('Network to filter through balance records.')
-        .setRequired(false)
-        .setMinValue(0)
-    )
-    .addStringOption((option) =>
-      option
-        .setName('token_address')
-        .setDescription(
-          'The address of a specific token to filter through the balance records.'
-        )
-    )
-    .addIntegerOption((option) =>
-      option
-        .setName('limit')
-        .setDescription('The maximum number of balance records to return.')
-        .setMinValue(0)
-    )
-    .addIntegerOption((option) =>
-      option
-        .setName('offset')
-        .setDescription('Number of records to skip in the query.')
-        .setMinValue(0)
-    )
-    .addStringOption((option) =>
-      option
-        .setName('cursor')
-        .setDescription('The cursor returned in the previous response.')
-    ),
+  builder: builder,
   async run(interaction) {
     await interaction.deferReply();
     // ------ required params ----------

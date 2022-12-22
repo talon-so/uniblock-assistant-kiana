@@ -1,9 +1,14 @@
-const imports = require('../index.js');
+const imports = require('../../index.js');
+const { SlashCommandBuilder } = require('discord.js');
+
+const name = "get_wallet";
+const description = "Get the users wallet";
 
 module.exports = {
-  name: "get_wallet",
-  description: "Get the users wallet",
+  name,
+  description,
   cooldown: 1000,
+  builder: new SlashCommandBuilder().setName(name).setDescription(description),
   async run(interaction, client) {
     const wallets = imports.wallets;
     const userId = interaction.user.id;

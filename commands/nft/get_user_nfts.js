@@ -45,7 +45,7 @@ const builder = new SlashCommandBuilder()
 NETWORK_OPTIONS.forEach((choice) => {
   builder.options[3].addChoices(choice);
 });
-addQueryOptions(builder);
+addQueryOptions(builder, true);
 
 module.exports = {
   name: name,

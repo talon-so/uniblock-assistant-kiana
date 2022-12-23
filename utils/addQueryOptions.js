@@ -2,7 +2,7 @@
  * Adds base query options for limit, offset, cursor to the command builder
  * @param slashCommandBuilder builder that provides options to commands
  */
-const addQueryOptions = (slashCommandBuilder) => {
+const addQueryOptions = (slashCommandBuilder, withCursor) => {
   slashCommandBuilder
     .addIntegerOption((option) =>
       option
@@ -15,11 +15,13 @@ const addQueryOptions = (slashCommandBuilder) => {
         .setName('offset')
         .setDescription('Number of records to skip in the query.')
         .setMinValue(0)
-    )
-    .addStringOption((option) =>
+    );
+  if (withCursor) {
+    slashCommandBuilder.addStringOption((option) =>
       option
         .setName('cursor')
         .setDescription('The cursor returned in the previous response.')
     );
+  }
 };
 exports.addQueryOptions = addQueryOptions;

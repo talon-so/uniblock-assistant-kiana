@@ -30,7 +30,7 @@ const builder = new SlashCommandBuilder()
         'The address of a specific token to filter through the balance records.'
       )
   );
-addQueryOptions(builder);
+  addQueryOptions(builder, true);
 // TODO: fix choices when discord.js bug fixed and addChoices accepts arrays.
 NETWORK_OPTIONS.forEach((choice) => {
   builder.options[1].addChoices(choice);

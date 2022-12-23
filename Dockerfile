@@ -6,4 +6,4 @@ RUN npm i
 COPY . . 
 # Build production image
 FROM dependencies as builder
-CMD npm run deploy
+CMD npm run start

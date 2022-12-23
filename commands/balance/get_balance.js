@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { AttachmentBuilder, SlashCommandBuilder } = require('discord.js');
-const imports = require('../../index.js')
+const imports = require('../../index.js');
 const { NETWORK_OPTIONS } = require('../../constants/network.js');
 const { addQueryOptions } = require('../../utils/addQueryOptions');
 
